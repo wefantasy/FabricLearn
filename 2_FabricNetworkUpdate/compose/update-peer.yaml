@@ -1,0 +1,20 @@
+version: '2'
+
+networks:
+  network:
+
+services:
+  peer2.soft.ifantasy.net:
+    container_name: peer2.soft.ifantasy.net
+    extends:
+      file: docker-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer2.soft.ifantasy.net
+      - CORE_PEER_ADDRESS=peer2.soft.ifantasy.net:7051
+      - CORE_PEER_LOCALMSPID=softMSP
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer2.soft.ifantasy.net:7051
+    volumes:
+      - ${LOCAL_CA_PATH}/soft.ifantasy.net/registers/peer2:${DOCKER_CA_PATH}/peer
+    ports:
+      - 7252:7051

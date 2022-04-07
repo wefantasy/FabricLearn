@@ -12,5 +12,6 @@ echo "127.0.0.1       orderer2.orderer.ifantasy.net" >> /etc/hosts
 echo "127.0.0.1       orderer3.orderer.ifantasy.net" >> /etc/hosts
 
 echo "127.0.0.1       peer1.soft.ifantasy.net" >> /etc/hosts
+echo "127.0.0.1       peer2.soft.ifantasy.net" >> /etc/hosts
 echo "127.0.0.1       peer1.web.ifantasy.net" >> /etc/hosts
 echo "127.0.0.1       peer1.hard.ifantasy.net" >> /etc/hosts
