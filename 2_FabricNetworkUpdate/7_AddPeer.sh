@@ -22,7 +22,7 @@ mkdir -p $LOCAL_CA_PATH/soft.ifantasy.net/registers/peer2/msp/admincerts
 cp $LOCAL_CA_PATH/soft.ifantasy.net/registers/admin1/msp/signcerts/cert.pem $LOCAL_CA_PATH/soft.ifantasy.net/registers/peer2/msp/admincerts/cert.pem
 
 docker-compose -f $LOCAL_ROOT_PATH/compose/update-peer.yaml up -d peer2.soft.ifantasy.net
-echo "127.0.0.1       peer2.soft.ifantasy.net" >> /etc/hosts
+# echo "127.0.0.1       peer2.soft.ifantasy.net" >> /etc/hosts
 
 peer channel fetch 0 mychannel.block -o orderer1.orderer.ifantasy.net:7151 -c mychannel --tls --cafile $ORDERER_CA
 source envpeer2soft

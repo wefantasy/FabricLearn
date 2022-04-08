@@ -28,8 +28,8 @@
 - [x] [Fabric的test-network启动过程Bash源码详解](https://ifantasy.net/2022/03/29/hyperledger_fabric_0_test_network_explain/)
 - [x] [Fabric定制联盟链网络工程实践](https://ifantasy.net/2022/04/01/hyperledger_fabric_1_custom_our_network/)
 - [x] [Fabric组织的添加和删除](https://ifantasy.net/2022/04/04/hyperledger_fabric_2_update_org/)
-- [ ] Fabric节点的添加和删除
-- [ ] Fabric无系统通道启动及通道的添加和删除
+- [x] [Fabric节点的添加和删除](https://ifantasy.net/2022/04/06/hyperledger_fabric_3_update_peer/)
+- [x] [Fabric无系统通道启动及通道的添加和删除](https://ifantasy.net/2022/04/07/hyperledger_fabric_4_run_with_no_system_channel_and_update_channel/)
 - [ ] Fabric无Orderer组织启动Raft排序服务
 - [ ] Fabric多主机多节点启动网络
 
@@ -66,6 +66,7 @@ source envpeer1soft
 ├── config                 # Fabric 公共配置目录
 │   ├── config-msp.yaml    # 节点组织单元配置文件
 │   ├── configtx.yaml      # 初始通道配置
+│   ├── orderer.yaml      # orderer/osnadmin 的配置文件
 │   └── core.yaml          # peer 配置
 ├── data                   # 临时数据目录
 ├── envpeer1soft           # soft 组织的 peer1 cli环境变量
