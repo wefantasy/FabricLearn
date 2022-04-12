@@ -1,0 +1,61 @@
+version: "2"
+
+services:
+  ca-base:
+    image: hyperledger/fabric-ca:${FABRIC_CA_VERSION}
+    environment:
+      - FABRIC_CA_SERVER_HOME=${DOCKER_CA_PATH}/ca/crypto
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_DEBUG=true
+    networks:
+      - ${DOCKER_NETWORKS}
+      
+  peer-base:
+    image: hyperledger/fabric-peer:${FABRIC_BASE_VERSION}
+    environment:
+      - CORE_PEER_MSPCONFIGPATH=${DOCKER_CA_PATH}/peer/msp
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=${COMPOSE_PROJECT_NAME}_${DOCKER_NETWORKS}
+      - FABRIC_LOGGING_SPEC=info
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=${DOCKER_CA_PATH}/peer/tls-msp/signcerts/cert.pem
+      - CORE_PEER_TLS_KEY_FILE=${DOCKER_CA_PATH}/peer/tls-msp/keystore/key.pem
+      - CORE_PEER_TLS_ROOTCERT_FILE=${DOCKER_CA_PATH}/peer/tls-msp/tlscacerts/tls-council-ifantasy-net-7050.pem
+      - CORE_PEER_GOSSIP_USELEADERELECTION=true
+      - CORE_PEER_GOSSIP_ORGLEADER=false
+      - CORE_PEER_GOSSIP_SKIPHANDSHAKE=true
+    working_dir: ${DOCKER_CA_PATH}/peer
+    volumes:
+      - /var/run:/host/var/run
+    networks:
+      - ${DOCKER_NETWORKS}
+
+  orderer-base:
+    image: hyperledger/fabric-orderer:${FABRIC_BASE_VERSION}
+    environment:
+      - ORDERER_HOME=${DOCKER_CA_PATH}/orderer
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_BOOTSTRAPMETHOD=none
+      - ORDERER_CHANNELPARTICIPATION_ENABLED=true
+      # - ORDERER_GENERAL_GENESISMETHOD=file
+      # - ORDERER_GENERAL_GENESISFILE=${DOCKER_CA_PATH}/orderer/genesis.block
+      - ORDERER_GENERAL_LOCALMSPDIR=${DOCKER_CA_PATH}/orderer/msp
+      - ORDERER_GENERAL_LOGLEVEL=debug
+      - ORDERER_GENERAL_TLS_ENABLED=true
+      - ORDERER_GENERAL_TLS_CERTIFICATE=${DOCKER_CA_PATH}/orderer/tls-msp/signcerts/cert.pem
+      - ORDERER_GENERAL_TLS_PRIVATEKEY=${DOCKER_CA_PATH}/orderer/tls-msp/keystore/key.pem
+      - ORDERER_GENERAL_TLS_ROOTCAS=[${DOCKER_CA_PATH}/orderer/tls-msp/tlscacerts/tls-council-ifantasy-net-7050.pem]
+      - ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE=${DOCKER_CA_PATH}/orderer/tls-msp/signcerts/cert.pem
+      - ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY=${DOCKER_CA_PATH}/orderer/tls-msp/keystore/key.pem
+      - ORDERER_GENERAL_CLUSTER_ROOTCAS=[${DOCKER_CA_PATH}/orderer/tls-msp/tlscacerts/tls-council-ifantasy-net-7050.pem]
+      - ORDERER_ADMIN_TLS_ENABLED=true
+      - ORDERER_ADMIN_TLS_CERTIFICATE=${DOCKER_CA_PATH}/orderer/tls-msp/signcerts/cert.pem
+      - ORDERER_ADMIN_TLS_PRIVATEKEY=${DOCKER_CA_PATH}/orderer/tls-msp/keystore/key.pem
+      - ORDERER_ADMIN_TLS_ROOTCAS=[${DOCKER_CA_PATH}/orderer/tls-msp/tlscacerts/tls-council-ifantasy-net-7050.pem]
+      - ORDERER_ADMIN_TLS_CLIENTROOTCAS=[${DOCKER_CA_PATH}/orderer/tls-msp/tlscacerts/tls-council-ifantasy-net-7050.pem]
+      - ORDERER_ADMIN_LISTENADDRESS=0.0.0.0:8888
+      - ORDERER_METRICS_PROVIDER=prometheus
+      - ORDERER_OPERATIONS_LISTENADDRESS=0.0.0.0:9999
+      - ORDERER_DEBUG_BROADCASTTRACEDIR=data/logs
+    networks:
+      - ${DOCKER_NETWORKS}
