@@ -12,7 +12,7 @@ peer lifecycle chaincode install basic.tar.gz
 peer lifecycle chaincode queryinstalled
 
 export CHAINCODE_ID=basic_1:06613e463ef6694805dd896ca79634a2de36fdf019fa7976467e6e632104d718
-exit
+
 source envpeer1soft
 peer lifecycle chaincode approveformyorg -o orderer1.soft.ifantasy.net:8251 --tls --cafile $ORDERER_CA  --channelID testchannel --name basic --version 1.0 --sequence 1 --waitForEvent --init-required --package-id $CHAINCODE_ID
 peer lifecycle chaincode queryapproved -C testchannel -n basic --sequence 1

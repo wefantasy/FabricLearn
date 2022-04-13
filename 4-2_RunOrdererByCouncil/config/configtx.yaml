@@ -28,9 +28,9 @@ Organizations:
         # 客户端和对等点可以分别连接到这些orderer以推送transactions和接收区块。
         # 此文件内的Orderer端口皆为容器内端口
         OrdererEndpoints:
-            - "orderer1.council.ifantasy.net:7051"
-            - "orderer2.council.ifantasy.net:7054"
-            - "orderer3.council.ifantasy.net:7057"
+            - orderer1.council.ifantasy.net:7051
+            - orderer2.council.ifantasy.net:7054
+            - orderer3.council.ifantasy.net:7057
 
     - &softMSP
         Name: softMSP
@@ -142,9 +142,9 @@ Orderer: &OrdererDefaults
     # 目前可用的类型为：solo，kafka，etcdraft
     OrdererType: etcdraft
     Addresses:
-        - orderer1.soft.ifantasy.net:7051
-        - orderer2.web.ifantasy.net:7052
-        - orderer3.hard.ifantasy.net:7053
+        - orderer1.council.ifantasy.net:7051
+        - orderer2.council.ifantasy.net:7052
+        - orderer3.council.ifantasy.net:7053
     # 定义了EtcdRaft排序类型被选择时的配置
     EtcdRaft:
         Consenters:

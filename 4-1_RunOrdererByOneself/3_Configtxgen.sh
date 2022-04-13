@@ -6,6 +6,10 @@ sleep 5
 configtxgen -profile OrgsChannel -outputCreateChannelTx $LOCAL_ROOT_PATH/data/testchannel.tx -channelID testchannel
 configtxgen -profile OrgsChannel -outputBlock $LOCAL_ROOT_PATH/data/testchannel.block -channelID testchannel
 
+cp $LOCAL_ROOT_PATH/data/testchannel.block $LOCAL_CA_PATH/soft.ifantasy.net/assets/
+cp $LOCAL_ROOT_PATH/data/testchannel.block $LOCAL_CA_PATH/web.ifantasy.net/assets/
+cp $LOCAL_ROOT_PATH/data/testchannel.block $LOCAL_CA_PATH/hard.ifantasy.net/assets/
+
 source envpeer1soft
 osnadmin channel list -o orderer1.soft.ifantasy.net:8252 --ca-file $ORDERER_CA --client-cert $ORDERER_ADMIN_TLS_SIGN_CERT --client-key $ORDERER_ADMIN_TLS_PRIVATE_KEY
 osnadmin channel join -o orderer1.soft.ifantasy.net:8252 --channelID testchannel --config-block $LOCAL_ROOT_PATH/data/testchannel.block --ca-file "$ORDERER_CA" --client-cert "$ORDERER_ADMIN_TLS_SIGN_CERT" --client-key "$ORDERER_ADMIN_TLS_PRIVATE_KEY"
@@ -18,10 +22,6 @@ source envpeer1hard
 osnadmin channel list -o orderer1.hard.ifantasy.net:8452 --ca-file $ORDERER_CA --client-cert $ORDERER_ADMIN_TLS_SIGN_CERT --client-key $ORDERER_ADMIN_TLS_PRIVATE_KEY
 osnadmin channel join -o orderer1.hard.ifantasy.net:8452 --channelID testchannel --config-block $LOCAL_ROOT_PATH/data/testchannel.block --ca-file "$ORDERER_CA" --client-cert "$ORDERER_ADMIN_TLS_SIGN_CERT" --client-key "$ORDERER_ADMIN_TLS_PRIVATE_KEY"
 osnadmin channel list -o orderer1.hard.ifantasy.net:8452 --ca-file $ORDERER_CA --client-cert $ORDERER_ADMIN_TLS_SIGN_CERT --client-key $ORDERER_ADMIN_TLS_PRIVATE_KEY
-
-cp $LOCAL_ROOT_PATH/data/testchannel.block $LOCAL_CA_PATH/soft.ifantasy.net/assets/
-cp $LOCAL_ROOT_PATH/data/testchannel.block $LOCAL_CA_PATH/web.ifantasy.net/assets/
-cp $LOCAL_ROOT_PATH/data/testchannel.block $LOCAL_CA_PATH/hard.ifantasy.net/assets/
 
 source envpeer1soft
 peer channel join -b $LOCAL_CA_PATH/soft.ifantasy.net/assets/testchannel.block

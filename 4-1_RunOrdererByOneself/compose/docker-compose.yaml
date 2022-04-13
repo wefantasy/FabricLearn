@@ -67,14 +67,14 @@ services:
       service: peer-base
     environment:
       - CORE_PEER_ID=peer1.soft.ifantasy.net
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
-      - CORE_PEER_ADDRESS=peer1.soft.ifantasy.net:7051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:7251
+      - CORE_PEER_ADDRESS=peer1.soft.ifantasy.net:7251
       - CORE_PEER_LOCALMSPID=softMSP
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.soft.ifantasy.net:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.soft.ifantasy.net:7251
     volumes:
       - ${LOCAL_CA_PATH}/soft.ifantasy.net/registers/peer1:${DOCKER_CA_PATH}/peer
     ports:
-      - 7251:7051
+      - 7251:7251
       
   peer1.web.ifantasy.net:
     container_name: peer1.web.ifantasy.net
@@ -83,14 +83,14 @@ services:
       service: peer-base
     environment:
       - CORE_PEER_ID=peer1.web.ifantasy.net
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
-      - CORE_PEER_ADDRESS=peer1.web.ifantasy.net:7051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:7351
+      - CORE_PEER_ADDRESS=peer1.web.ifantasy.net:7351
       - CORE_PEER_LOCALMSPID=webMSP
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.web.ifantasy.net:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.web.ifantasy.net:7351
     volumes:
       - ${LOCAL_CA_PATH}/web.ifantasy.net/registers/peer1:${DOCKER_CA_PATH}/peer
     ports:
-      - 7351:7051
+      - 7351:7351
     
   peer1.hard.ifantasy.net:
     container_name: peer1.hard.ifantasy.net
@@ -99,14 +99,14 @@ services:
       service: peer-base
     environment:
       - CORE_PEER_ID=peer1.hard.ifantasy.net
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
-      - CORE_PEER_ADDRESS=peer1.hard.ifantasy.net:7051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:7451
+      - CORE_PEER_ADDRESS=peer1.hard.ifantasy.net:7451
       - CORE_PEER_LOCALMSPID=hardMSP
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.hard.ifantasy.net:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.hard.ifantasy.net:7451
     volumes:
       - ${LOCAL_CA_PATH}/hard.ifantasy.net/registers/peer1:${DOCKER_CA_PATH}/peer
     ports:
-      - 7451:7051
+      - 7451:7451
       
   orderer1.soft.ifantasy.net:
     container_name: orderer1.soft.ifantasy.net

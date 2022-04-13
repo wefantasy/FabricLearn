@@ -1,5 +1,5 @@
 #!/bin/bash -eu
-echo "Working on tls"
+echo "Working on council"
 export FABRIC_CA_CLIENT_TLS_CERTFILES=$LOCAL_CA_PATH/council.ifantasy.net/ca/crypto/ca-cert.pem
 export FABRIC_CA_CLIENT_HOME=$LOCAL_CA_PATH/council.ifantasy.net/ca/admin
 fabric-ca-client enroll -d -u https://ca-admin:ca-adminpw@council.ifantasy.net:7050
@@ -22,7 +22,7 @@ export FABRIC_CA_CLIENT_HOME=$LOCAL_CA_PATH/web.ifantasy.net/ca/admin
 fabric-ca-client enroll -d -u https://ca-admin:ca-adminpw@web.ifantasy.net:7350
 fabric-ca-client register -d --id.name peer1 --id.secret peer1 --id.type peer -u https://web.ifantasy.net:7350
 fabric-ca-client register -d --id.name admin1 --id.secret admin1 --id.type admin -u https://web.ifantasy.net:7350
-echo "All CA and registration done"
+echo "Working on hard"
 export FABRIC_CA_CLIENT_TLS_CERTFILES=$LOCAL_CA_PATH/hard.ifantasy.net/ca/crypto/ca-cert.pem
 export FABRIC_CA_CLIENT_HOME=$LOCAL_CA_PATH/hard.ifantasy.net/ca/admin
 fabric-ca-client enroll -d -u https://ca-admin:ca-adminpw@hard.ifantasy.net:7450

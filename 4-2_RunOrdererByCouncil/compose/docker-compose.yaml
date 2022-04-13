@@ -119,7 +119,6 @@ services:
       - ORDERER_GENERAL_LISTENPORT=7051
     volumes:
       - ${LOCAL_CA_PATH}/council.ifantasy.net/registers/orderer1:${DOCKER_CA_PATH}/orderer
-      - ${LOCAL_ROOT_PATH}/data/genesis.block:${DOCKER_CA_PATH}/orderer/genesis.block
     ports:
       - 7051:7051
       - 7052:8888
@@ -136,9 +135,8 @@ services:
       - ORDERER_GENERAL_LISTENPORT=7054
     volumes:
       - ${LOCAL_CA_PATH}/council.ifantasy.net/registers/orderer2:${DOCKER_CA_PATH}/orderer
-      - ${LOCAL_ROOT_PATH}/data/genesis.block:${DOCKER_CA_PATH}/orderer/genesis.block
     ports:
-      - 7054:7051
+      - 7054:7054
       - 7055:8888
       - 7056:9999
       
@@ -153,7 +151,6 @@ services:
       - ORDERER_GENERAL_LISTENPORT=7057
     volumes:
       - ${LOCAL_CA_PATH}/council.ifantasy.net/registers/orderer3:${DOCKER_CA_PATH}/orderer
-      - ${LOCAL_ROOT_PATH}/data/genesis.block:${DOCKER_CA_PATH}/orderer/genesis.block
     ports:
       - 7057:7057
       - 7058:8888
