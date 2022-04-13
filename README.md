@@ -32,7 +32,7 @@
 - [x] [Hyperledger Fabric无系统通道启动及通道的创建和删除](https://ifantasy.net/2022/04/07/hyperledger_fabric_4_run_with_no_system_channel_and_update_channel/)
 - [x] [Hyperledger Fabric无排序组织以Raft协议启动多个Orderer服务、多组织共同运行维护Orderer](https://ifantasy.net/2022/04/10/hyperledger_fabric_5_run_multi_orderer_by_oneself/)
 - [x] [Hyperledger Fabric无排序组织以Raft协议启动多个Orderer服务、TLS组织运行维护Orderer服务](https://ifantasy.net/2022/04/11/hyperledger_fabric_6_run_multi_orderer_by_council/)
-- [ ] Hyperledger Fabric多主机多节点启动网络
+- [x] [Hyperledger Fabric多主机多节点启动网络](https://ifantasy.net/2022/04/13/hyperledger_fabric_7_run_network_on_multi_host/)
 - [ ] Hyperledger Fabric通过K8S部署多机多节点网络
 
 ## 运行复现
