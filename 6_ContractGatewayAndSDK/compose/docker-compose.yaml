@@ -1,0 +1,157 @@
+version: '2'
+
+networks:
+  network:
+
+services:
+  council.ifantasy.net:
+    container_name: council.ifantasy.net
+    extends:
+      file: docker-base.yaml
+      service: ca-base
+    command: sh -c 'fabric-ca-server start -d -b ca-admin:ca-adminpw --port 7050'
+    environment:
+      - FABRIC_CA_SERVER_CSR_CN=council.ifantasy.net
+      - FABRIC_CA_SERVER_CSR_HOSTS=council.ifantasy.net
+    volumes:
+      - ${LOCAL_CA_PATH}/council.ifantasy.net/ca:${DOCKER_CA_PATH}/ca
+    ports:
+      - 7050:7050
+
+  soft.ifantasy.net:
+    container_name: soft.ifantasy.net
+    extends:
+      file: docker-base.yaml
+      service: ca-base
+    command: sh -c 'fabric-ca-server start -d -b ca-admin:ca-adminpw --port 7050'
+    environment:
+      - FABRIC_CA_SERVER_CSR_CN=soft.ifantasy.net
+      - FABRIC_CA_SERVER_CSR_HOSTS=soft.ifantasy.net
+    volumes:
+      - ${LOCAL_CA_PATH}/soft.ifantasy.net/ca:${DOCKER_CA_PATH}/ca
+    ports:
+      - 7250:7050
+
+  web.ifantasy.net:
+    container_name: web.ifantasy.net
+    extends:
+      file: docker-base.yaml
+      service: ca-base
+    command: sh -c 'fabric-ca-server start -d -b ca-admin:ca-adminpw --port 7050'
+    environment:
+      - FABRIC_CA_SERVER_CSR_CN=web.ifantasy.net
+      - FABRIC_CA_SERVER_CSR_HOSTS=web.ifantasy.net
+    volumes:
+      - ${LOCAL_CA_PATH}/web.ifantasy.net/ca:${DOCKER_CA_PATH}/ca
+    ports:
+      - 7350:7050
+  
+  hard.ifantasy.net:
+    container_name: hard.ifantasy.net
+    extends:
+      file: docker-base.yaml
+      service: ca-base
+    command: sh -c 'fabric-ca-server start -d -b ca-admin:ca-adminpw --port 7050'
+    environment:
+      - FABRIC_CA_SERVER_CSR_CN=hard.ifantasy.net
+      - FABRIC_CA_SERVER_CSR_HOSTS=hard.ifantasy.net
+    volumes:
+      - ${LOCAL_CA_PATH}/hard.ifantasy.net/ca:${DOCKER_CA_PATH}/ca
+    ports:
+      - 7450:7050
+
+  peer1.soft.ifantasy.net:
+    container_name: peer1.soft.ifantasy.net
+    extends:
+      file: docker-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.soft.ifantasy.net
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:7251
+      - CORE_PEER_ADDRESS=peer1.soft.ifantasy.net:7251
+      - CORE_PEER_LOCALMSPID=softMSP
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.soft.ifantasy.net:7251
+    volumes:
+      - ${LOCAL_CA_PATH}/soft.ifantasy.net/registers/peer1:${DOCKER_CA_PATH}/peer
+    ports:
+      - 7251:7251
+      
+  peer1.web.ifantasy.net:
+    container_name: peer1.web.ifantasy.net
+    extends:
+      file: docker-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.web.ifantasy.net
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:7351
+      - CORE_PEER_ADDRESS=peer1.web.ifantasy.net:7351
+      - CORE_PEER_LOCALMSPID=webMSP
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.web.ifantasy.net:7351
+    volumes:
+      - ${LOCAL_CA_PATH}/web.ifantasy.net/registers/peer1:${DOCKER_CA_PATH}/peer
+    ports:
+      - 7351:7351
+
+  peer1.hard.ifantasy.net:
+    container_name: peer1.hard.ifantasy.net
+    extends:
+      file: docker-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.hard.ifantasy.net
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:7451
+      - CORE_PEER_ADDRESS=peer1.hard.ifantasy.net:7451
+      - CORE_PEER_LOCALMSPID=hardMSP
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.hard.ifantasy.net:7451
+    volumes:
+      - ${LOCAL_CA_PATH}/hard.ifantasy.net/registers/peer1:${DOCKER_CA_PATH}/peer
+    ports:
+      - 7451:7451
+      
+  orderer1.council.ifantasy.net:
+    container_name: orderer1.council.ifantasy.net
+    extends:
+      file: docker-base.yaml
+      service: orderer-base
+    environment:
+      - ORDERER_HOST=orderer1.council.ifantasy.net
+      - ORDERER_GENERAL_LOCALMSPID=councilMSP
+      - ORDERER_GENERAL_LISTENPORT=7051
+    volumes:
+      - ${LOCAL_CA_PATH}/council.ifantasy.net/registers/orderer1:${DOCKER_CA_PATH}/orderer
+    ports:
+      - 7051:7051
+      - 7052:8888
+      - 7053:9999
+
+  orderer2.council.ifantasy.net:
+    container_name: orderer2.council.ifantasy.net
+    extends:
+      file: docker-base.yaml
+      service: orderer-base
+    environment:
+      - ORDERER_HOST=orderer2.council.ifantasy.net
+      - ORDERER_GENERAL_LOCALMSPID=councilMSP
+      - ORDERER_GENERAL_LISTENPORT=7054
+    volumes:
+      - ${LOCAL_CA_PATH}/council.ifantasy.net/registers/orderer2:${DOCKER_CA_PATH}/orderer
+    ports:
+      - 7054:7054
+      - 7055:8888
+      - 7056:9999
+      
+  orderer3.council.ifantasy.net:
+    container_name: orderer3.council.ifantasy.net
+    extends:
+      file: docker-base.yaml
+      service: orderer-base
+    environment:
+      - ORDERER_HOST=orderer3.council.ifantasy.net
+      - ORDERER_GENERAL_LOCALMSPID=councilMSP
+      - ORDERER_GENERAL_LISTENPORT=7057
+    volumes:
+      - ${LOCAL_CA_PATH}/council.ifantasy.net/registers/orderer3:${DOCKER_CA_PATH}/orderer
+    ports:
+      - 7057:7057
+      - 7058:8888
+      - 7059:9999

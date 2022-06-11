@@ -1,0 +1,35 @@
+---
+name: test-network-${ORG}
+version: 1.0.0
+client:
+  organization: ${ORG}
+  connection:
+    timeout:
+      peer:
+        endorser: '300'
+organizations:
+  ${ORG}:
+    mspid: ${ORG}MSP
+    peers:
+    - peer1.${ORG}.ifantasy.net
+    certificateAuthorities:
+    - ${ORG}.ifantasy.net
+peers:
+  peer1.${ORG}.ifantasy.net:
+    url: grpcs://peer1.${ORG}.ifantasy.net:${P0PORT}
+    tlsCACerts:
+      pem: |
+          ${PEERPEM}
+    grpcOptions:
+      ssl-target-name-override: peer1.${ORG}.ifantasy.net
+      hostnameOverride: peer1.${ORG}.ifantasy.net
+certificateAuthorities:
+  ${ORG}.ifantasy.net:
+    url: https://${ORG}.ifantasy.net:${CAPORT}
+    caName: ${ORG}.ifantasy.net
+    tlsCACerts:
+      pem: 
+        - |
+          ${CAPEM}
+    httpOptions:
+      verify: false

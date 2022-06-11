@@ -1,0 +1,242 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+---
+################################################################################
+#   Section: Organizations
+################################################################################
+Organizations:
+
+    # SampleOrg defines an MSP using the sampleconfig.  It should never be used
+    # in production but may be used as a template for other definitions
+    - &council
+        Name: councilMSP
+        ID: councilMSP
+        MSPDir: ../orgs/council.ifantasy.net/msp
+        Policies: 
+            Readers:
+                Type: Signature
+                Rule: "OR('councilMSP.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('councilMSP.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('councilMSP.admin')"
+        # 客户端和对等点可以分别连接到这些orderer以推送transactions和接收区块。
+        # 此文件内的Orderer端口皆为容器内端口
+        OrdererEndpoints:
+            - orderer1.council.ifantasy.net:7051
+            - orderer2.council.ifantasy.net:7054
+            - orderer3.council.ifantasy.net:7057
+
+    - &soft
+        Name: softMSP
+        ID: softMSP
+        MSPDir: ../orgs/soft.ifantasy.net/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('softMSP.admin', 'softMSP.peer', 'softMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('softMSP.admin', 'softMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('softMSP.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('softMSP.peer')"
+        AnchorPeers:
+            - Host: peer1.soft.ifantasy.net
+              Port: 7251
+    
+    - &web
+        Name: webMSP
+        ID: webMSP
+        MSPDir: ../orgs/web.ifantasy.net/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('webMSP.admin', 'webMSP.peer', 'webMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('webMSP.admin', 'webMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('webMSP.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('webMSP.peer')"
+        AnchorPeers:
+            - Host: peer1.web.ifantasy.net
+              Port: 7351
+
+    - &hard
+        Name: hardMSP
+        ID: hardMSP
+        MSPDir: ../orgs/hard.ifantasy.net/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('hardMSP.admin', 'hardMSP.peer', 'hardMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('hardMSP.admin', 'hardMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('hardMSP.admin')"
+            Endorsement:
+                Type: Signature
+                Rule: "OR('hardMSP.peer')"
+        AnchorPeers:
+            - Host: peer1.hard.ifantasy.net
+              Port: 7451
+
+    
+################################################################################
+#   SECTION: Capabilities 定义了fabric程序要加入网络所必须支持的特性
+################################################################################
+Capabilities:
+    Channel: &ChannelCapabilities
+        V2_0: true
+    Orderer: &OrdererCapabilities
+        V2_0: true
+    Application: &ApplicationCapabilities
+        V2_0: true
+
+################################################################################
+#   SECTION: Application 定义要写入创世区块或配置交易的应用参数
+################################################################################
+Application: &ApplicationDefaults
+    Organizations:
+    # Policies defines the set of policies at this level of the config tree
+    # For Application policies, their canonical path is
+    #   /Channel/Application/<PolicyName>
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+        LifecycleEndorsement:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Endorsement"
+        Endorsement:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Endorsement"
+
+    Capabilities:
+        <<: *ApplicationCapabilities
+################################################################################
+#   SECTION: Orderer 定义要编码写入创世区块或通道交易的排序节点参数
+################################################################################
+Orderer: &OrdererDefaults
+
+    # 目前可用的类型为：solo，kafka，etcdraft
+    OrdererType: etcdraft
+    Addresses:
+        - orderer1.council.ifantasy.net:7051
+        - orderer2.council.ifantasy.net:7052
+        - orderer3.council.ifantasy.net:7053
+    # 定义了EtcdRaft排序类型被选择时的配置
+    EtcdRaft:
+        Consenters:
+        - Host: orderer1.council.ifantasy.net
+          Port: 7051
+          ClientTLSCert: ../orgs/council.ifantasy.net/registers/orderer1/tls-msp/signcerts/cert.pem
+          ServerTLSCert: ../orgs/council.ifantasy.net/registers/orderer1/tls-msp/signcerts/cert.pem
+        - Host: orderer2.council.ifantasy.net
+          Port: 7054
+          ClientTLSCert: ../orgs/council.ifantasy.net/registers/orderer2/tls-msp/signcerts/cert.pem
+          ServerTLSCert: ../orgs/council.ifantasy.net/registers/orderer2/tls-msp/signcerts/cert.pem
+        - Host: orderer3.council.ifantasy.net
+          Port: 7057
+          ClientTLSCert: ../orgs/council.ifantasy.net/registers/orderer3/tls-msp/signcerts/cert.pem
+          ServerTLSCert: ../orgs/council.ifantasy.net/registers/orderer3/tls-msp/signcerts/cert.pem
+
+    # 区块打包的最大超时时间 (到了该时间就打包区块)
+    BatchTimeout: 2s
+    # 区块打包的最大包含交易数（orderer端切分区块的参数）
+    BatchSize:
+        # 一个区块里最大的交易数
+        MaxMessageCount: 10
+        # 一个区块的最大字节数，任何时候都不能超过
+        AbsoluteMaxBytes: 99 MB
+        # 一个区块的建议字节数，如果一个交易消息的大小超过了这个值, 就会被放入另外一个更大的区块中
+        PreferredMaxBytes: 512 KB
+
+    # 参与维护Orderer的组织，默认为空
+    Organizations:
+    # 定义本层级的排序节点策略，其权威路径为 /Channel/Orderer/<PolicyName>
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+        # BlockValidation specifies what signatures must be included in the block
+        # from the orderer for the peer to validate it.
+        BlockValidation:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+
+    Capabilities:
+        <<: *OrdererCapabilities
+
+################################################################################
+#   CHANNEL 定义要写入创世区块或配置交易的通道参数
+################################################################################
+Channel: &ChannelDefaults
+    # Policies defines the set of policies at this level of the config tree
+    # For Channel policies, their canonical path is
+    #   /Channel/<PolicyName>
+    Policies:
+        # Who may invoke the 'Deliver' API
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        # Who may invoke the 'Broadcast' API
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        # By default, who may modify elements at this config level
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+
+    Capabilities:
+        <<: *ChannelCapabilities
+
+################################################################################
+#   Profile 定义用于configtxgen工具的配置入口
+################################################################################
+Profiles:
+    # OrgsChannel用来生成channel配置信息，名字可以任意
+    # 需要包含Consortium和Applicatioon两部分。
+    OrgsChannel:
+        Consortium: SampleConsortium    # 通道所关联的联盟名称
+        <<: *ChannelDefaults
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *council
+            Capabilities: *OrdererCapabilities
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *soft
+                - *web
+                - *hard
+            Capabilities:
+                <<: *ApplicationCapabilities

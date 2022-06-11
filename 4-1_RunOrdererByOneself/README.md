@@ -1,13 +1,18 @@
 ### 本文工作
-以无系统通道的方式启动 Hyperledger Fabric 网络，然后先用 `configtxgen` 工具创建新通道 `mychannel` 和 `testchannel` ，并使用 `osnadmin` 工具通过 `orderer` 的 `admin` 服务使 `orderer` 加入这两条通道（实验代码已上传至：[https://github.com/wefantasy/FabricLearn](https://github.com/wefantasy/FabricLearn) 的 `3_RunWithNoSystemChannel` 下）：  
+以无排序组织的方式启动 Hyperledger Fabric 网络，其中包含四个组织—— council 、 soft 、 web 、 hard ，council 组织为网络提供 TLS-CA 服务，除了 council 外每个组织都运行维护着一个 peer 节点和一个 orderer，网络结构为（实验代码已上传至：[https://github.com/wefantasy/FabricLearn](https://github.com/wefantasy/FabricLearn) 的 `4-1_RunOrdererByOneself` 下）：  
 
-项    |   运行端口  |  说明
-:---: | :---:  | :---:
-`council.ifantasy.net` |   7050 |  council 组织的 CA 服务， 为联盟链网络提供 TLS-CA 服务
-`orderer.ifantasy.net` |   7150 |  orderer 组织的 CA 服务， 为联盟链网络提供排序服务
-`orderer1.orderer.ifantasy.net` |   7151 |  orderer 组织的排序服务
-`orderer1.orderer.ifantasy.net` |   7152 |  orderer 组织的 ADMIN 服务
-`soft.ifantasy.net` |   7250 |  soft 组织的 CA 服务， 包含成员： peer1 、 admin1
-`peer1.soft.ifantasy.net` |   7251 |  soft 组织的 peer1 成员节点
-`web.ifantasy.net` |   7350 |  web 组织的 CA 服务， 包含成员： peer1 、 admin1
-`peer1.web.ifantasy.net` |   7351 |  web 组织的 peer1 成员节点
+|              项              | 运行端口 |                         说明                          |
+| :--------------------------: | :------: | :---------------------------------------------------: |
+|    `council.ifantasy.net`    |   7050   | council 组织的 CA 服务， 为联盟链网络提供 TLS-CA 服务 |
+|     `soft.ifantasy.net`      |   7250   |   soft 组织的 CA 服务， 包含成员： peer1 、 admin1    |
+|  `peer1.soft.ifantasy.net`   |   7251   |              soft 组织的 peer1 成员节点               |
+| `orderer1.soft.ifantasy.net` |   8251   |               soft 组织的 orderer1 服务               |
+| `orderer1.soft.ifantasy.net` |   8252   |        soft 组织的 orderer1 服务的 admin 服务         |
+|      `web.ifantasy.net`      |   7350   |    web 组织的 CA 服务， 包含成员： peer1 、 admin1    |
+|   `peer1.web.ifantasy.net`   |   7351   |               web 组织的 peer1 成员节点               |
+| `orderer1.soft.ifantasy.net` |   8351   |               web 组织的 orderer1 服务                |
+| `orderer1.soft.ifantasy.net` |   8352   |         web 组织的 orderer1 服务的 admin 服务         |
+|     `hard.ifantasy.net`      |   7450   |   hard 组织的 CA 服务， 包含成员： peer1 、 admin1    |
+|  `peer1.hard.ifantasy.net`   |   7451   |              hard 组织的 peer1 成员节点               |
+| `orderer1.soft.ifantasy.net` |   8451   |               hard 组织的 orderer1 服务               |
+| `orderer1.soft.ifantasy.net` |   8452   |        hard 组织的 orderer1 服务的 admin 服务         |

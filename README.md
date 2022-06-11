@@ -1,8 +1,8 @@
 ## FabricLearn
-本项目虚拟了一个工作室联盟链需求并将逐步实现，致力于提供一个易理解、可复现的Fabric学习项目，其中项目部署步骤的各个环节都清晰可见，并且将所有实验打包为脚本使之能够被快速复现在任何一台主机上。
+本项目虚拟了一个工作室联盟链需求并将逐步实现，致力于提供一个易理解、可复现的Fabric学习项目，其中项目部署步骤的各个环节都拆解至清晰可见，并且将所有实验打包为脚本使之能够被快速复现在任何一台具备基础环境的主机上。
 
 ## 背景介绍
-有一启明星工作室，其中包含三大组织：软件组、WEB组、硬件组、理事会，不同组织间相互独立，偶尔有业务往来。现理事会决定搭建一个启明星工作室的联盟链网络，使不同组织间加强合作，期望最终实现以下工程架构：
+期望建设一个工作室联盟链，其中包含三大组织：软件组、WEB组、硬件组、理事会，不同组织间相互独立，偶尔有业务往来，理事会负责管理协调工作室所有资源。现理事会决定搭建一个启明星工作室的联盟链网络，使不同组织间加强合作，期望最终实现以下工程架构：
   
 1. 组织说明  
    - `council`：理事会，负责工作室各组间协调管理，由三组抽调人员共同组成
@@ -11,7 +11,7 @@
    - `web`：WEB组，专注网站开发
    - `orderer`：过渡排序组织，为联盟链网络提供排序服务，**后期会舍弃**
 2. 成员说明  
-   - `council`：一个Admin账号
+   - `council`：三个orderer节点、一个Admin账号
    - `soft`：一个Peer节点、一个Admin账号、一个User账号
    - `hard`：一个Peer节点、一个Admin账号、一个User账号
    - `web`：一个Peer节点、一个Admin账号、一个User账号
@@ -32,7 +32,9 @@
 - [x] [Hyperledger Fabric无系统通道启动及通道的创建和删除](https://ifantasy.net/2022/04/07/hyperledger_fabric_4_run_with_no_system_channel_and_update_channel/)
 - [x] [Hyperledger Fabric无排序组织以Raft协议启动多个Orderer服务、多组织共同运行维护Orderer](https://ifantasy.net/2022/04/10/hyperledger_fabric_5_run_multi_orderer_by_oneself/)
 - [x] [Hyperledger Fabric无排序组织以Raft协议启动多个Orderer服务、TLS组织运行维护Orderer服务](https://ifantasy.net/2022/04/11/hyperledger_fabric_6_run_multi_orderer_by_council/)
-- [x] [Hyperledger Fabric多主机多节点启动网络](https://ifantasy.net/2022/04/13/hyperledger_fabric_7_run_network_on_multi_host/)
+- [x] [Hyperledger Fabric 多组织多排序节点部署在多个主机上](https://ifantasy.net/2022/04/13/hyperledger_fabric_7_run_network_on_multi_host/)
+- [x] [Hyperledger Fabric 智能合约开发及 fabric-sdk-go/fabric-gateway 使用示例](https://ifantasy.net/2022/06/10/hyperledger_fabric_9_contract_and_sdk_application_example/)
+- [ ] Hyperledger Fabric启动脚本优化
 - [ ] Hyperledger Fabric通过K8S部署多机多节点网络
 
 ## 运行复现
