@@ -34,8 +34,9 @@
 - [x] [Hyperledger Fabric无排序组织以Raft协议启动多个Orderer服务、TLS组织运行维护Orderer服务](https://ifantasy.net/2022/04/11/hyperledger_fabric_6_run_multi_orderer_by_council/)
 - [x] [Hyperledger Fabric 多组织多排序节点部署在多个主机上](https://ifantasy.net/2022/04/13/hyperledger_fabric_7_run_network_on_multi_host/)
 - [x] [Hyperledger Fabric 智能合约开发及 fabric-sdk-go/fabric-gateway 使用示例](https://ifantasy.net/2022/06/10/hyperledger_fabric_9_contract_and_sdk_application_example/)
-- [ ] Hyperledger Fabric启动脚本优化
-- [ ] Hyperledger Fabric通过K8S部署多机多节点网络
+- [x] [Hyperledger Fabric 使用 CouchDB 和复杂智能合约开发](https://ifantasy.net/2022/08/24/hyperledger_fabric_10_complex_contract_and_couchdb//)
+- [ ] Hyperledger Fabric 自动生成配置代码
+- [ ] Hyperledger Fabric 通过K8S部署多机多节点网络
 
 ## 运行复现
 不同阶段下的网络启动脚本不同，所有脚本都在对应目录的根目录下，一个示例启动顺序如下：
